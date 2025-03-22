@@ -1,0 +1,17 @@
+﻿@model HealthCareApplication_MVC.Models.Medicine
+
+<h2>Medicine Details</h2>
+<p><strong>Name:</strong> @Model.Name</p>
+<p><strong>Description:</strong> @Model.Description</p>
+<p><strong>Expiry Date:</strong> @Model.ExpiryDate.ToString("MM/dd/yyyy")</p>
+
+<h3>Inventory:</h3>
+<p>@ViewBag.Inventory</p>
+
+<form asp-action="RequestMedicine" method="post">
+    <input type="hidden" name="patientId" value="@ViewBag.PatientId" />
+    <input type="hidden" name="medicineId" value="@Model.MedicineID" />
+    <label>Quantity:</label>
+    <input type="number" name="quantity" min="1" max="@ViewBag.Inventory" required />
+    <button type="submit">Request Medicine</button>
+</form>

@@ -19,22 +19,20 @@ namespace HealthCareApplication_MVC.Controllers
             _patientDAL = new PatientDb(configuration);
         }
 
-        //PatientDb dal;//= new PatientDb();
-
-        // GET: Patient
+        [Route("/Account")]
         public ActionResult Index()
         {
             return View(_patientDAL.GetAllPatients());
         }
 
-        // GET: Patient/Create
+        [Route("/Account/SavePatient")]
         public ActionResult SavePatient()
         {
             return View();
         }
 
-        // POST: Patient/Create
-        [HttpPost]
+        [Route("/Account/SavePatient")]
+        [HttpPost("SavePatient")]
         public ActionResult SavePatient([FromBody] Patient patient)
         {
             if (patient == null || string.IsNullOrEmpty(patient.Name))

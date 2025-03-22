@@ -11,13 +11,13 @@ namespace HealthCareApplication_MVC.Controllers
 
         public IActionResult Login() => View();
         public IActionResult Register() => View();
-        //public IActionResult PatientHomePage()
-        //{
-        //    return View();  // This should load the corresponding view
-        //}
+        public IActionResult PatientHomePage()
+        {
+            return View();  
+        }
         public IActionResult Dashboard()
         {
-            return View();  // This should load the corresponding view
+            return View();  
         }
 
         [HttpPost]
@@ -78,8 +78,8 @@ namespace HealthCareApplication_MVC.Controllers
             if (isValid)
             {
                 Console.WriteLine("✅ Login Successful!");
-                return RedirectToAction("Dashboard");
-                //return RedirectToAction("PatientHomePage");
+                //return RedirectToAction("Dashboard");
+                return RedirectToAction("PatientHomePage");
             }
             else
             {
