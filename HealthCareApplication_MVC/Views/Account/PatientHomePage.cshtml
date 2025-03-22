@@ -1,6 +1,157 @@
-﻿@{
-    ViewData["Title"] = "Patient Home";
-}
+﻿@model List<HealthCareApplication_MVC.Models.Patient>
+
+    @{
+        ViewData["Title"] = "Patient Home";
+    }
 
 <h1>Welcome to the Patient Home Page</h1>
-<p>This is the home page for patients.</p>
+ <h2 class="mt-3">Patient Management System</h2>
+
+<!-- Button to Open Add Patient Modal -->
+<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#patientModal" onclick="clearForm()">Add New Patient</button>
+
+<!-- Patient Records Table -->
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in Model)
+            {
+                <tr>
+                    <td>@patient.Id</td>
+                    <td>@patient.Name</td>
+                    <td>@patient.Age</td>
+                    <td>@patient.Gender</td>
+                    <td>@patient.Contact</td>
+                    <td>@patient.Address</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#patientModal"
+                            onclick="editPatient(@patient.Id, '@patient.Name', @patient.Age, '@patient.Gender', '@patient.Contact', '@patient.Address')">
+                            Edit
+                        </button>
+                        <a asp-action="Delete" asp-route-id="@patient.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info mt-3" role="alert">
+        No patient records found.
+    </div>
+}
+
+<!-- Add/Edit Patient Modal -->
+<div class="modal fade" id="patientModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Add/Edit Patient</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="SavePatient" method="post">
+                    <input type="hidden" name="Id" id="patientId" />
+
+                    <div class="mb-2">
+                        <label>Name:</label>
+                        <input type="text" class="form-control" name="Name" id="patientName" required />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Age:</label>
+                        <input type="number" class="form-control" name="Age" id="patientAge" required />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Gender:</label>
+                        <select class="form-control" name="Gender" id="patientGender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Contact:</label>
+                        <input type="text" class="form-control" name="Contact" id="patientContact" required />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Address:</label>
+                        <input type="text" class="form-control" name="Address" id="patientAddress" required />
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="SaveForm()">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Handling Form -->
+<script>
+    function editPatient(id, name, age, gender, contact, address) {
+        document.getElementById("patientId").value = id;
+        document.getElementById("patientName").value = name;
+        document.getElementById("patientAge").value = age;
+        document.getElementById("patientGender").value = gender;
+        document.getElementById("patientContact").value = contact;
+        document.getElementById("patientAddress").value = address;
+        document.getElementById("modalTitle").innerText = "Edit Patient";
+    }
+
+    function clearForm() {
+        document.getElementById("patientId").value = "";
+        document.getElementById("patientName").value = "";
+        document.getElementById("patientAge").value = "";
+        document.getElementById("patientGender").value = "Male";
+        document.getElementById("patientContact").value = "";
+        document.getElementById("patientAddress").value = "";
+        document.getElementById("modalTitle").innerText = "Add Patient";
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function SaveForm() {
+        var formData = {
+            Id: $("#patientId").val(),
+            Name: $("#patientName").val(),
+            Age: $("#patientAge").val(),
+            Gender: $("#patientGender").val(),
+            Contact: $("#patientContact").val(),
+            Address: $("#patientAddress").val()
+        };
+        console.log(formData);
+        $.ajax({
+            url: "/Patients/SavePatient",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function (response) {
+                alert("Patient saved successfully!");
+                location.reload(); // Refresh page to show updated data
+            },
+            error: function (xhr, status, error) {
+                alert("Error saving patient: " + xhr.responseText);
+            }
+        });
+    }
+</script>
+

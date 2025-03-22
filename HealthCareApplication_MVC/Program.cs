@@ -93,7 +93,7 @@ class Program
 
     #endregion
 
-    #region
+    #region DatabaseConnection
     static void CheckDatabaseConnection()
     {
         string connectionString = "Server=ROHIT;Database=HealthCareApp;Trusted_Connection=True;TrustServerCertificate=True;";

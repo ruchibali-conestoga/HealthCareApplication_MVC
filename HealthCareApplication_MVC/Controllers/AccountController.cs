@@ -6,13 +6,16 @@ using System;
 namespace HealthCareApplication_MVC.Controllers
 {
     public class AccountController : Controller
-    {
-        // private readonly string connectionString = "Server=ROHIT;Database=HealthCareApp;Integrated Security=True;";
+    {        
         private readonly string connectionString = "Server=ROHIT;Database=HealthCareApp;Trusted_Connection=True;TrustServerCertificate=True;";
 
         public IActionResult Login() => View();
         public IActionResult Register() => View();
-        public IActionResult PatientHomePage()
+        //public IActionResult PatientHomePage()
+        //{
+        //    return View();  // This should load the corresponding view
+        //}
+        public IActionResult Dashboard()
         {
             return View();  // This should load the corresponding view
         }
@@ -60,7 +63,7 @@ namespace HealthCareApplication_MVC.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost]  
         public IActionResult Login(string Email, string Password)
         {
             Console.WriteLine("🔍 Login method called!"); // Debugging
@@ -75,7 +78,8 @@ namespace HealthCareApplication_MVC.Controllers
             if (isValid)
             {
                 Console.WriteLine("✅ Login Successful!");
-                return RedirectToAction("PatientHomePage"); // Change as per your logic
+                return RedirectToAction("Dashboard");
+                //return RedirectToAction("PatientHomePage");
             }
             else
             {
