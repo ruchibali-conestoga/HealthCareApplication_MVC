@@ -6,10 +6,10 @@ namespace HealthCareApplication_MVC.Controllers
 {
     public class AuthController : Controller
     {
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         private readonly DatabaseHelper _db;
 

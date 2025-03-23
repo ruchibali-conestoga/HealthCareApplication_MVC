@@ -47,6 +47,7 @@ namespace HealthCareApplication_MVC.Database
         // 2️⃣ ADD NEW PATIENT
         public void AddPatient(Patient patient)
         {
+            Console.WriteLine("inside addpatient.");
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("INSERT INTO Patients (Name, Age, Gender, Contact, Address) VALUES (@Name, @Age, @Gender, @Contact, @Address)", con);

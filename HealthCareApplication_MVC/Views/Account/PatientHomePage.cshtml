@@ -129,29 +129,38 @@ else
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function SaveForm() {
+     function SaveForm() {
         var formData = {
-            Id: $("#patientId").val(),
+            Id: parseInt($("#patientId").val()) || 0, // Ensure numeric values
             Name: $("#patientName").val(),
-            Age: $("#patientAge").val(),
+            Age: parseInt($("#patientAge").val()) || 0, // Avoid NaN
             Gender: $("#patientGender").val(),
             Contact: $("#patientContact").val(),
             Address: $("#patientAddress").val()
         };
-        console.log(formData);
+
+        console.log("Sending Data:", JSON.stringify(formData)); // Debugging
+
+
+
+
+
         $.ajax({
-            url: "/Patients/SavePatient",
+            url: "/api/Patient/SavePatient",
             type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8", // Ensure correct format
+            data: JSON.stringify(formData), // Convert object to JSON
+            dataType: "json", // Expect JSON response
             success: function (response) {
                 alert("Patient saved successfully!");
-                location.reload(); // Refresh page to show updated data
+                location.reload();
             },
             error: function (xhr, status, error) {
+                console.error("Error:", xhr.responseText);
                 alert("Error saving patient: " + xhr.responseText);
             }
         });
     }
+
 </script>
 

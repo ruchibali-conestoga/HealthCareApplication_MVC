@@ -8,7 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Patient\" />
+    <Folder Include="wwwroot\img\" />
+    <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
 </Project>

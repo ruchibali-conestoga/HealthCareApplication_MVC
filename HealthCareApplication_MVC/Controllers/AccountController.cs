@@ -11,9 +11,17 @@ namespace HealthCareApplication_MVC.Controllers
 
         public IActionResult Login() => View();
         public IActionResult Register() => View();
-        public IActionResult PatientHomePage()
+        public IActionResult patient()
         {
             return View();  
+        }
+        public IActionResult appointment()
+        {
+            return View();
+        }
+        public IActionResult medicine()
+        {
+            return View();
         }
         public IActionResult Dashboard()
         {
@@ -79,7 +87,7 @@ namespace HealthCareApplication_MVC.Controllers
             {
                 Console.WriteLine("✅ Login Successful!");
                 //return RedirectToAction("Dashboard");
-                return RedirectToAction("PatientHomePage");
+                return RedirectToAction("patient");
             }
             else
             {
